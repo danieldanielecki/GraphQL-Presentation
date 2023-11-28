@@ -117,6 +117,23 @@ type Author {
 			</section>
 			<section>GraphQL Basics: Graph</section>
 			<section>GraphQL Basics: Schema</section>
+			<section>
+				<pre><code>
+type Query {
+	book(id: ID!): Book
+	author(id: ID!): Author
+}
+
+type Mutation {
+	addComment(input: AddCommentInput): Comment
+}
+
+type Book { ... }
+type Author { ... }
+type Comment { ... }
+input AddCommentInput { ... }
+				</code></pre>
+			</section>
 			<section>GraphQL Basics: Query</section>
 			<section>
 				<pre><code>
@@ -139,6 +156,45 @@ type Query {
 				</code></pre>
 			</section>
 			<section>GraphQL Operation Types: Query, Mutations and Subscriptions</section>
+			<section>
+				<pre><code>
+query { ... }
+mutation { ... }
+				</code></pre>
+			</section>
+			<section>
+				<pre><code>
+app.get('/hello', function (req, res) {
+	res.send('Hello World!')
+})
+				</code></pre>
+			</section>
+			<section>
+				<pre><code>
+const resolvers = {
+	Query: {
+		hello: () => {
+			return 'Hello world!';
+		},
+	},
+};
+				</code></pre>
+			</section>
+			<section>
+				<pre><code>
+query {
+	hello
+}
+				</code></pre>
+			</section>
+			<section>
+				<pre><code>
+query {
+	hello
+	secondHello: hello
+}
+				</code></pre>
+			</section>
 			<section>GraphQL Tooling</section>
 			<section>Comparison to REST API's</section>
 			<section>Beyond the Basics</section>
