@@ -97,9 +97,47 @@
 				<h1>Why GraphQL?</h1>
 				<p>Query only what you need.</p>
 			</section>
+			<section>
+				<pre><code>
+type Book {
+	id: ID
+	title: String
+	published: Date
+	price: String
+	author: Author
+}
+
+type Author {
+	id: ID
+	firstName: String
+	lastName: String
+	books: [Book]
+}
+				</code></pre>
+			</section>
 			<section>GraphQL Basics: Graph</section>
 			<section>GraphQL Basics: Schema</section>
 			<section>GraphQL Basics: Query</section>
+			<section>
+				<pre><code>
+type Query {
+	book(id: ID!): Book
+	author(id: ID!): Author
+}
+				</code></pre>
+			</section>
+			<section>
+				<pre><code>
+// GET /graphql?query={ book(id: "1") { title, author { firstName } } }
+
+{
+	"title": "Black Hole Blues",
+	"author": {
+		"firstName": "Janna",
+	}
+}
+				</code></pre>
+			</section>
 			<section>GraphQL Operation Types: Query, Mutations and Subscriptions</section>
 			<section>GraphQL Tooling</section>
 			<section>Comparison to REST API's</section>
