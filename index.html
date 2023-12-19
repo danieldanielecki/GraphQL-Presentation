@@ -98,100 +98,98 @@
 				<h1>Why GraphQL?</h1>
 				<p>Query only what you need.</p>
 			</section>
-			<section>
-				<pre><code>
-type Book {
-	id: ID
-	title: String
-	published: Date
-	price: String
-	author: Author
-}
-
-type Author {
-	id: ID
-	firstName: String
-	lastName: String
-	books: [Book]
-}
-				</code></pre>
-			</section>
 			<section>GraphQL Basics: Schema</section>
 			<section>
 				<pre><code>
-type Query {
-	book(id: ID!): Book
-	author(id: ID!): Author
+type Query { ... }
+type Mutation {	... }
+type Subscription { ... }
+input CreateUserInput { ... }
+				</code></pre>
+			</section>
+			<section>GraphQL Basics: Object Types</section>
+			<section>
+				<h2>GraphQL Basics: Object Types</h2>
+				<pre><code>
+type User {
+	id: ID!
+	name: String!
+	email: String!
+	age: Int
+	posts: [Post!]!
 }
-
-type Mutation {
-	addComment(input: AddCommentInput): Comment
+type Post {
+	id: ID!
+	title: String!
+	body: String!
+	author: User!
 }
-
-type Book { ... }
-type Author { ... }
-type Comment { ... }
-input AddCommentInput { ... }
 				</code></pre>
 			</section>
 			<section>GraphQL Basics: Query</section>
 			<section>
+				<h2>GraphQL Basics: Query</h2>
 				<pre><code>
 type Query {
-	book(id: ID!): Book
-	author(id: ID!): Author
+	users(query: String): [User!]!
+	posts(query: String): [Post!]!
+	dummy: User!
+	post: Post!
 }
 				</code></pre>
 			</section>
 			<section>
+				<h2>GraphQL Basics: Query</h2>
 				<pre><code>
-// GET /graphql?query={ book(id: "1") { title, author { firstName } } }
-
-{
-	"title": "Black Hole Blues",
-	"author": {
-		"firstName": "Janna",
+query {
+	dummy {
+		id
 	}
 }
 				</code></pre>
 			</section>
-			<section>GraphQL Operation Types: Query, Mutations and Subscriptions</section>
+			<section>GraphQL Mutations and Subscriptions</section>
 			<section>
+				<h2>GraphQL Mutations</h2>
 				<pre><code>
-query { ... }
-mutation { ... }
-				</code></pre>
-			</section>
-			<section>
-				<pre><code>
-app.get('/hello', function (req, res) {
-	res.send('Hello World!')
-})
-				</code></pre>
-			</section>
-			<section>
-				<pre><code>
-const resolvers = {
-	Query: {
-		hello: () => {
-			return 'Hello world!';
-		},
-	},
-};
-				</code></pre>
-			</section>
-			<section>
-				<pre><code>
-query {
-	hello
+type Mutation {
+	createUser(data: CreateUserInput!): User!
+	deleteUser(id: ID!): User!
+	updateUser(id: ID!, data: UpdateUserInput!): User!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  age: Int
 }
 				</code></pre>
 			</section>
 			<section>
+				<h2>GraphQL Mutations</h2>
 				<pre><code>
-query {
-	hello
-	secondHello: hello
+mutation {
+	createUser(data: { name: "Daniel", email: "foo@example.com", age: 25 }) {
+		id
+		email
+		age
+	}
+}
+				</code></pre>
+			</section>
+			<section>
+				<h2>GraphQL Subscriptions</h2>
+				<pre><code>
+type Subscription {
+	count: Int!
+}
+				</code></pre>
+			</section>
+			<section>
+				<h2>GraphQL Subscriptions</h2>
+				<pre><code>
+subscription {
+	count
 }
 				</code></pre>
 			</section>
@@ -199,7 +197,7 @@ query {
 			<section>
 				<h1>GraphQL Tooling</h1>
 				<ul>
-					<li>Apollo Client - library for GraphQL with any FE framework.</li>
+					<li>Apollo Client - library for GraphQL with any (React, Kotlin, iOS) client.</li>
 					<li>Apollo Server - GraphQL server.</li>
 					<li>GraphQL Yoga - GraphQL server.</li>
 					<li><a href="https://www.apollographql.com/docs/graphos/explorer" target="_blank">Apollo Studio/GraphOS</a> -
@@ -212,7 +210,7 @@ query {
 				<ul>
 					<li>Authorization</li>
 					<li>Caching</li>
-					<li>Database Storge integration with GraphQL</li>
+					<li>Database Storge integration with GraphQL (Prisma)</li>
 					<li>Error Handling - GraphQL returns 200 (OK Status Code) even if errors occured</li>
 					<li>Global Object Identification</li>
 					<li>Pagination</li>
