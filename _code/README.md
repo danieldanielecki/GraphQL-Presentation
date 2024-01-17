@@ -314,3 +314,5 @@ subscription {
 1. `yarn start` in `graphql-prisma`
 2. `yarn start` in `apollo-client`
 3. Open `localhost:1234`
+
+### Testing demo
