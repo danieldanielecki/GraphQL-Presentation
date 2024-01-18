@@ -316,3 +316,7 @@ subscription {
 3. Open `localhost:1234`
 
 ### Testing demo
+
+1. `cd _code`
+2. `cd unit-testing`
+3. `yarn test`
