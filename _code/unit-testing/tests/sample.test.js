@@ -1,46 +1,53 @@
 const graphql = require("graphql");
-const yogga = require("graphql-yoga");
+const graphqlYoga = require("graphql-yoga");
 const executorHttp = require("@graphql-tools/executor-http");
+const Query = require("./../resolvers/Query.js");
+const Mutation = require("./../resolvers/Mutation.js");
+const Subscription = require("./../resolvers/Subscription.js");
+const User = require("./../resolvers/User.js");
+const Post = require("./../resolvers/Post.js");
+const fs = require("fs");
+const path = require("path");
 
-const schema = yogga.createSchema({
-  typeDefs: /* GraphQL */ `
-    type Query {
-      greetings: String!
-    }
-  `,
-  resolvers: {
-    Query: {
-      greetings: () => "Hello World!",
+const yoga = graphqlYoga.createYoga({
+  schema: graphqlYoga.createSchema({
+    typeDefs: fs.readFileSync(
+      path.join(__dirname, "..", "./", "src", "schema.graphql"),
+      "utf8"
+    ),
+    resolvers: {
+      Query,
+      Mutation,
+      Subscription,
+      User,
+      Post,
     },
-  },
+  }),
 });
-
-const yoga = yogga.createYoga({ schema });
-
-function assertSingleValue(value) {
-  if (Symbol.asyncIterator in value) {
-    throw new Error("Expected single value");
-  }
-}
 
 const executor = executorHttp.buildHTTPExecutor({
   fetch: yoga.fetch,
 });
 
-it("runs a query", async () => {
+it("should run a dummy query", async () => {
   const result = await executor({
     document: graphql.parse(/* GraphQL */ `
       query {
-        greetings
+        dummy {
+          id
+          name
+          email
+        }
       }
     `),
   });
 
-  assertSingleValue(result);
   console.log(JSON.stringify(result));
 
-  console.assert(
-    result.data?.greetings === "Hello World!",
-    `Expected 'Hello World!' but got ${result.data.greetings}`
-  );
+  // toEqual/toStrictEqual fixes toBe's: "Received: serializes to the same string" (https://stackoverflow.com/questions/56839801/jest-js-error-received-serializes-to-the-same-string)
+  expect(result.data?.dummy).toEqual({
+    id: "1234",
+    name: "Test",
+    email: "foo@google.com",
+  });
 });
