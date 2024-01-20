@@ -303,6 +303,8 @@ query {
 
 ### Subscription 1
 
+(show the simplest subscription)
+
 ```graphql
 subscription {
   count
@@ -311,11 +313,15 @@ subscription {
 
 ### Apollo Client demo
 
+(little example how it looks in reality in frontend)
+
 1. `yarn start` in `graphql-prisma`
 2. `yarn start` in `apollo-client`
 3. Open `localhost:1234`
 
 ### Testing demo
+
+(shortly show tested 1 of each: query, mutation, and subscription)
 
 1. `cd _code`
 2. `cd unit-testing`
